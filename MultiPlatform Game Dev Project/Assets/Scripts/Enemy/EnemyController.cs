@@ -16,12 +16,14 @@ public class EnemyController : MonoBehaviour
     public Canvas UI;
     public Text NameText;
     private Slider healthBar;
+
     
     [Range(1, 9)]
-    public int Level = 1; 
-    
-    protected int Health = 100;
-    protected float Armor = 0.1f;
+    public int Level = 1;
+
+    public int Health;
+    public float Armor;
+    public int EnemyDamagePower;
     private NavMeshAgent enemyNavMesh;
 
     public LayerMask GroundLayerMask;
@@ -32,7 +34,7 @@ public class EnemyController : MonoBehaviour
     public float WalkingPointRange = 5f;
     private bool isWalkingPointSet;
 
-    public float AttackInterval = 0.5f;
+    public float AttackInterval = 1f;
     private bool alreadyAttacked;
 
     public float AiSightRange = 20;
@@ -41,15 +43,17 @@ public class EnemyController : MonoBehaviour
     private bool isPlayerInSightRange;
     private bool isPlayerInAttackRange;
 
+    private AudioSource hitPlayerSound;
+
     public enum AIBehavior { Idle, Patrol, Follow, Attack };
     public AIBehavior CurrentAI;
     public bool allowEnemyPatrol;
 
 
     //Debug
-    [Header("DEBUG")]
-    public bool ShowAttackRange = true;
-    public bool ShowAlertRange = true;
+    //[Header("DEBUG")]
+    //public bool ShowAttackRange = true;
+    //public bool ShowAlertRange = true;
    
 
     // Start is called before the first frame update
@@ -60,12 +64,14 @@ public class EnemyController : MonoBehaviour
         CurrentAI = AIBehavior.Idle;
         allowEnemyPatrol = true;
         healthBar = UI.GetComponentInChildren<Slider>();
+        hitPlayerSound = GetComponent<AudioSource>();
     }
 
     void Start()
     {
         Health *= Level;
         Armor = Mathf.Clamp(Armor * Level, 0.0f, 1f);
+        EnemyDamagePower = EnemyDamagePower * Level;
         healthBar.maxValue = Health;
         healthBar.minValue = 0;
         healthBar.value = Health;
@@ -129,9 +135,11 @@ public class EnemyController : MonoBehaviour
 
                 if (!alreadyAttacked)
                 {
-                    //////Attack Code Here///////
+                    //////Attack Code///////                    
+                    player.transform.gameObject.GetComponent<PlayerStatController>().TakeDamage(EnemyDamagePower);
                     Debug.Log("Player is getting attacked!");
                     alreadyAttacked = true;
+                    hitPlayerSound.Play();
                     Invoke(nameof(ResetAttack), AttackInterval);
 
                 }
@@ -158,7 +166,7 @@ public class EnemyController : MonoBehaviour
 
     private void ResetAttack()
     {
-        alreadyAttacked = true;
+        alreadyAttacked = false;
     }
 
     public void TakeDamage(int damage)
@@ -186,17 +194,10 @@ public class EnemyController : MonoBehaviour
     }
 
     private void OnDrawGizmosSelected()
-    {
-        if (ShowAlertRange)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, AiSightRange);
-        }
-
-        if (ShowAttackRange)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, AiAttackRange);
-        }
+    {        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, AiSightRange);                        
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, AiAttackRange);        
     }
 }
