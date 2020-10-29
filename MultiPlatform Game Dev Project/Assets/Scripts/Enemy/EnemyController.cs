@@ -4,19 +4,28 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
-//Algorithm referenced from this video: https://www.youtube.com/watch?v=UjkSFoLxesw
+
+//Path Finding Algorithm is referenced from this video: https://www.youtube.com/watch?v=UjkSFoLxesw
 
 
 public class EnemyController : MonoBehaviour
 {
     //Variables
+    public Canvas UI;
+    public Text NameText;
+    private Slider healthBar;
+    
+    [Range(1, 9)]
+    public int Level = 1; 
+    
     protected int Health = 100;
-    protected float Armor = 0.2f;
+    protected float Armor = 0.1f;
+    private NavMeshAgent enemyNavMesh;
 
     public LayerMask GroundLayerMask;
     public LayerMask PlayerLayerMask;
-    private NavMeshAgent enemyNavMesh;
     private GameObject player;
 
     private Vector3 walkingPoint;
@@ -27,7 +36,7 @@ public class EnemyController : MonoBehaviour
     private bool alreadyAttacked;
 
     public float AiSightRange = 20;
-    public float AiAttackRange = 12;
+    public float AiAttackRange = 3;
 
     private bool isPlayerInSightRange;
     private bool isPlayerInAttackRange;
@@ -50,14 +59,29 @@ public class EnemyController : MonoBehaviour
         enemyNavMesh = GetComponent<NavMeshAgent>();
         CurrentAI = AIBehavior.Idle;
         allowEnemyPatrol = true;
+        healthBar = UI.GetComponentInChildren<Slider>();
     }
+
+    void Start()
+    {
+        Health *= Level;
+        Armor = Mathf.Clamp(Armor * Level, 0.0f, 1f);
+        healthBar.maxValue = Health;
+        healthBar.minValue = 0;
+        healthBar.value = Health;
+        enemyNavMesh.speed = 5 + ((float)Level / 2);
+        enemyNavMesh.acceleration = 2 + ((float)Level / 5);       
+        NameText.text = "Level " + Level + " Monster";
+    }
+    
 
     // Update is called once per frame
     void Update()
     {
         isPlayerInSightRange = Physics.CheckSphere(transform.position, AiSightRange, PlayerLayerMask);
         isPlayerInAttackRange = Physics.CheckSphere(transform.position, AiAttackRange, PlayerLayerMask);
-
+        CurrentAI = AIBehavior.Attack;
+        
         if (isPlayerInAttackRange && isPlayerInSightRange)
         {
             CurrentAI = AIBehavior.Attack;
@@ -68,14 +92,12 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            CurrentAI = allowEnemyPatrol ? AIBehavior.Patrol : AIBehavior.Idle;
+             CurrentAI = allowEnemyPatrol ? AIBehavior.Patrol : AIBehavior.Idle;
         }
-
 
         switch (CurrentAI)
         {
             case AIBehavior.Patrol:
-                Debug.Log("AI Patrolling");
                 if (!isWalkingPointSet)
                 {
                     FindNewWalkPoint();
@@ -96,17 +118,19 @@ public class EnemyController : MonoBehaviour
 
             case AIBehavior.Follow:
                 enemyNavMesh.SetDestination(player.transform.position);
+                Debug.DrawLine(transform.position, player.transform.position, Color.yellow);
                 break;
             
             case AIBehavior.Attack:
 
                 enemyNavMesh.SetDestination(transform.position);
                 transform.LookAt(player.transform);
+                Debug.DrawLine(transform.position, player.transform.position, Color.red);
 
                 if (!alreadyAttacked)
                 {
                     //////Attack Code Here///////
-                             
+                    Debug.Log("Player is getting attacked!");
                     alreadyAttacked = true;
                     Invoke(nameof(ResetAttack), AttackInterval);
 
@@ -147,7 +171,9 @@ public class EnemyController : MonoBehaviour
         {
             Health -= damage;
         }
-
+        
+        healthBar.value = Health;
+        
         if (Health <= 0)
         {
             Invoke(nameof(DestroyEnemy), 0.5f);            

@@ -24,8 +24,10 @@ public class PistolShoot : MonoBehaviour
     [Header("Related GameObjects")]
     public Camera camera;
     public AudioClip shootSound;
+    public GameObject lineEffect;
     public Text magAmmoText;
     public Text reserveAmmoText;
+ 
     [Space()]
 
     private float fireDelay;
@@ -44,7 +46,7 @@ public class PistolShoot : MonoBehaviour
         currentMagAmmo = maxMagAmmo;
         currentReserveAmmo = maxReserveAmmo;
         originPosition = transform.position;
-        
+        lineEffect.SetActive(false);
     }
 
     // Update is called once per frame
@@ -78,6 +80,8 @@ public class PistolShoot : MonoBehaviour
             DisplayRecoil();
             RecoilRecovery();
 
+            StartCoroutine("ShootEffect");
+
             // Play Shooting Sound
             audioSource.clip = shootSound;
             audioSource.Play();
@@ -86,7 +90,7 @@ public class PistolShoot : MonoBehaviour
 
             // If the ray hit something
             if (Physics.Raycast(ray, camera.transform.forward, out hit, weaponRange))
-            {               
+            {
                 if (hit.transform.gameObject.tag == "Enemy")
                 {
                     hit.transform.gameObject.GetComponent<EnemyController>().TakeDamage(damage);
@@ -97,7 +101,6 @@ public class PistolShoot : MonoBehaviour
                     Debug.Log("Hit!");
                 }
             }
-            
         }
     }
 
@@ -145,5 +148,12 @@ public class PistolShoot : MonoBehaviour
 
         // Set recovery Rotation
         transform.localRotation = Quaternion.Euler(rotation);
+    }
+
+    IEnumerator ShootEffect()
+    {
+        lineEffect.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        lineEffect.SetActive(false);
     }
 }
