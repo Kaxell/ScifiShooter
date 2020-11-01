@@ -44,7 +44,7 @@ public class PlayerStatController : MonoBehaviour
     {
         HealthText.text = "♥" + Health.ToString();
         ArmorText.text = "Armor %" + Armor.ToString();
-        UpdateWaveText(Level - 1);
+        UpdateWaveText(Level);
     }
 
     public void TakeDamage(int damage)
@@ -82,7 +82,7 @@ public class PlayerStatController : MonoBehaviour
 
     public void UpdateWaveText(int level)
     {
-        LevelText.text = "Waves Cleared: " + (Level - 1) + " / " + 3;
+        LevelText.text = "Waves Cleared: " + (level - 1) + " / " + 3;
     }
 
     public void FreezePlayer()

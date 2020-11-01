@@ -90,7 +90,7 @@ public class GameController : MonoBehaviour
                 GameWon();
             }
             
-            player.GetComponent<PlayerStatController>().UpdateWaveText(currentWaveLevel + 1);
+            player.GetComponent<PlayerStatController>().UpdateWaveText(currentWaveLevel);
             
         }
 
