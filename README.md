@@ -28,8 +28,8 @@
 ## Item Pickup
 [Key Spawning](https://www.youtube.com/watch?v=IXDvl8aTM_M)
 
-Game Controller 
-Enemy Controller (Except path finding)
+Game Controller  
+Enemy Controller (Except path finding)  
 Player Stat Builder  
 and all else are written from scratch, using the default Unity built in packages.  
 
