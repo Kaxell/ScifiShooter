@@ -24,8 +24,15 @@ public class Zoom : MonoBehaviour
 
     void Update()
     {
-        zoomAmount += Input.mouseScrollDelta.y * sensitivity * .05f;
-        zoomAmount = Mathf.Clamp01(zoomAmount);
-        camera.fieldOfView = Mathf.Lerp(defaultFOV, maxZoom, zoomAmount);
+        if (Input.GetMouseButtonDown(1))
+        {
+            zoomAmount = 1f * sensitivity * .05f;
+            zoomAmount = Mathf.Clamp01(zoomAmount);
+            camera.fieldOfView = Mathf.Lerp(defaultFOV, maxZoom, zoomAmount);
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            camera.fieldOfView = Mathf.Lerp(defaultFOV, maxZoom, -zoomAmount);
+        }
     }
 }

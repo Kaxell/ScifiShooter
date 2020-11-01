@@ -12,10 +12,12 @@ using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
+    private GameObject gameController;
+
     //Variables
     public Canvas UI;
     public Text NameText;
-    private Slider healthBar;
+    public Slider healthBar;
 
     
     [Range(1, 9)]
@@ -56,19 +58,21 @@ public class EnemyController : MonoBehaviour
     //public bool ShowAlertRange = true;
    
 
-    // Start is called before the first frame update
-    void Awake()
+    public void Init(int level)
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        gameController = GameObject.FindGameObjectWithTag("GameController");
         enemyNavMesh = GetComponent<NavMeshAgent>();
         CurrentAI = AIBehavior.Idle;
         allowEnemyPatrol = true;
-        healthBar = UI.GetComponentInChildren<Slider>();
         hitPlayerSound = GetComponent<AudioSource>();
+        SetEnemyLevel(level);
     }
 
-    void Start()
+
+    public void SetEnemyLevel(int level)
     {
+        Level = level;
         Health *= Level;
         Armor = Mathf.Clamp(Armor * Level, 0.0f, 1f);
         EnemyDamagePower = EnemyDamagePower * Level;
@@ -76,8 +80,22 @@ public class EnemyController : MonoBehaviour
         healthBar.minValue = 0;
         healthBar.value = Health;
         enemyNavMesh.speed = 5 + ((float)Level / 2);
-        enemyNavMesh.acceleration = 2 + ((float)Level / 5);       
+        enemyNavMesh.acceleration = 2 + ((float)Level / 5);
         NameText.text = "Level " + Level + " Monster";
+        
+        if (Level == 1)
+        {
+            NameText.color = Color.white;
+        }
+        else if (Level == 2)
+        {
+            NameText.color = Color.blue;
+        }
+        else if (Level == 3)
+        {
+            NameText.color = Color.red;
+        }
+
     }
     
 
@@ -190,7 +208,19 @@ public class EnemyController : MonoBehaviour
 
     private void DestroyEnemy()
     {
-        Destroy(gameObject);        
+        if (UnityEngine.Random.value < 0.1f)
+        {
+            var healthPickUp = GameObject.FindGameObjectWithTag("PickUpHealth");
+            Instantiate(healthPickUp, new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z), transform.rotation);
+        }
+        else if (UnityEngine.Random.value < 0.2f)
+        {
+            var ammoPickUp = GameObject.FindGameObjectWithTag("PickUpAmmo");
+            Instantiate(ammoPickUp, new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z), transform.rotation);
+        }
+
+        gameController.GetComponent<GameController>().OnEnemyDestroyed(gameObject); 
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()

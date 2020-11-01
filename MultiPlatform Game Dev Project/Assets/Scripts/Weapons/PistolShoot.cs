@@ -24,7 +24,8 @@ public class PistolShoot : MonoBehaviour
     [Header("Related GameObjects")]
     public Camera camera;
     public AudioClip shootSound;
-    public GameObject lineEffect;
+    public GameObject currentLineEffect;
+    public GameObject[] allLineEffects;
     public Text magAmmoText;
     public Text reserveAmmoText;
  
@@ -46,7 +47,7 @@ public class PistolShoot : MonoBehaviour
         currentMagAmmo = maxMagAmmo;
         currentReserveAmmo = maxReserveAmmo;
         originPosition = transform.position;
-        lineEffect.SetActive(false);
+        currentLineEffect.SetActive(false);
     }
 
     // Update is called once per frame
@@ -58,9 +59,6 @@ public class PistolShoot : MonoBehaviour
         // Every frame, check if the user wants to reload
         Reload();
 
-        // Every frame, perform recoil recovery (if needed)
-        RecoilRecovery();
-
         // Update UI elements in case they have changed
         UpdateUI();
     }
@@ -68,7 +66,7 @@ public class PistolShoot : MonoBehaviour
     void Shoot()
     {
         // If user presses Fire1 (LMB) and they can shoot
-        if (Input.GetButtonDown("Fire1") && Time.time > fireDelay && currentMagAmmo > 0)
+        if (Input.GetMouseButton(0) && Time.time > fireDelay && currentMagAmmo > 0)
         {
             // Calculate new delay timer to control firerate
             fireDelay = Time.time + fireRate;
@@ -129,7 +127,22 @@ public class PistolShoot : MonoBehaviour
     void UpdateUI()
     {
         magAmmoText.text = currentMagAmmo.ToString();
-        reserveAmmoText.text = currentReserveAmmo.ToString();
+        reserveAmmoText.text = currentReserveAmmo.ToString() + " -R-";
+    }
+
+    public void OnAmmoPickedUp()
+    {
+        currentMagAmmo += 20;
+    }
+
+    public void OnLeveledUp(int currentWaveLevel)
+    {
+        currentMagAmmo += 20;
+        damage += 20;
+        maxReserveAmmo += 30;
+        fireRate -= 0.005f;
+        recoilIntensity -= 0.005f;
+        currentLineEffect = allLineEffects[currentWaveLevel - 1];
     }
 
     void DisplayRecoil()
@@ -142,18 +155,18 @@ public class PistolShoot : MonoBehaviour
 
     void RecoilRecovery()
     {
-        // Calculate gun recoil and recovery rotation
-        recoilOffset = Vector3.Lerp(recoilOffset, originPosition, 25f * Time.deltaTime);
-        rotation = Vector3.Slerp(rotation, recoilOffset, 6f * Time.deltaTime);
-
-        // Set recovery Rotation
-        transform.localRotation = Quaternion.Euler(rotation);
+       // Calculate gun recoil and recovery rotation
+       recoilOffset = Vector3.Lerp(recoilOffset, originPosition, 25f * Time.deltaTime);
+       rotation = Vector3.Slerp(rotation, recoilOffset, 6f * Time.deltaTime);
+       
+       // Set recovery Rotation
+       transform.localRotation = Quaternion.Euler(rotation);
     }
 
     IEnumerator ShootEffect()
     {
-        lineEffect.SetActive(true);
+        currentLineEffect.SetActive(true);
         yield return new WaitForSeconds(0.1f);
-        lineEffect.SetActive(false);
+        currentLineEffect.SetActive(false);
     }
 }

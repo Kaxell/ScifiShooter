@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - PickUp
+  - Spawnpoint
+  - PickUpKey
+  - PickUpHealth
+  - PickUpAmmo
+  - Weapon
   layers:
   - Default
   - TransparentFX
