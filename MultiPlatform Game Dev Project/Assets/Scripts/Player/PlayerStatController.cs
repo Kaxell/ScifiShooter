@@ -7,22 +7,27 @@ using UnityEngine.UI;
 
 public class PlayerStatController : MonoBehaviour
 {
+    #region Variables
+    [Header("Player Statistics")]
     public int Health;
     public int Level;
     public float Armor;
 
     //private float[] experienceRequiredPerLevel = { 5f, 10f, 25f, 50f, 100f, 200f };   
-    
+
+    [Header("Text Objects")]
     public Text HealthText;
     public Text ArmorText;
     public Text LevelText;
-    // Start is called before the first frame update
+    #endregion
 
+    // Start is called before the first frame update
     private void Start()
     {
         //SetPlayerLevel(1);
     }
 
+    // Every wave, modify player statistics
     public void SetPlayerLevel(int currentWaveLevel)
     {
         Level = currentWaveLevel;
@@ -34,12 +39,7 @@ public class PlayerStatController : MonoBehaviour
         UpdatePlayerStatsTexts();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }
-
+    // UI Update Method
     private void UpdatePlayerStatsTexts()
     {
         HealthText.text = "♥" + Health.ToString();
@@ -47,8 +47,10 @@ public class PlayerStatController : MonoBehaviour
         UpdateWaveText(Level);
     }
 
+    // Handling player taking damage
     public void TakeDamage(int damage)
     {
+        // If there is armour active, use it first
         if (Armor > 0)
         {
             Health -= Mathf.RoundToInt((float)damage * (1 - Armor));
@@ -60,6 +62,7 @@ public class PlayerStatController : MonoBehaviour
 
         UpdatePlayerStatsTexts();
 
+        // If player dies
         if (Health <= 0)
         {
             Health = 0;

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SwayWeapon : MonoBehaviour
 {
-    // Start is called before the first frame update
 
     #region Variables
     public float swayAmount;
@@ -27,9 +26,11 @@ public class SwayWeapon : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 
+        // Calculate rotation based on mouse movements
         Quaternion rotX = Quaternion.AngleAxis(mouseX * swayAmount, Vector3.up);
         Quaternion rotY = Quaternion.AngleAxis(mouseY * swayAmount, Vector3.right);
 
+        // Generate a final rotation and apply it to the object
         Quaternion finalRotation = origin * rotX * rotY;
         transform.localRotation = Quaternion.Lerp(transform.localRotation, finalRotation, smoothFactor * Time.deltaTime);
     }

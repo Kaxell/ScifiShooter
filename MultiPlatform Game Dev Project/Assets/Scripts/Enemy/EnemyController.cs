@@ -14,15 +14,16 @@ public class EnemyController : MonoBehaviour
 {
     private GameObject gameController;
 
-    //Variables
+    #region Variables
+
+    [Header("Objects")]
     public Canvas UI;
     public Text NameText;
     public Slider healthBar;
 
-    
+    [Header("Enemy Statistics")]
     [Range(1, 9)]
     public int Level = 1;
-
     public int Health;
     public float Armor;
     public int EnemyDamagePower;
@@ -50,13 +51,12 @@ public class EnemyController : MonoBehaviour
     public enum AIBehavior { Idle, Patrol, Follow, Attack };
     public AIBehavior CurrentAI;
     public bool allowEnemyPatrol;
-
+    #endregion
 
     //Debug
     //[Header("DEBUG")]
     //public bool ShowAttackRange = true;
     //public bool ShowAlertRange = true;
-   
 
     public void Init(int level)
     {
@@ -70,6 +70,7 @@ public class EnemyController : MonoBehaviour
     }
 
 
+    // Method that calculates enemy level scaling
     public void SetEnemyLevel(int level)
     {
         Level = level;
@@ -102,10 +103,12 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Handling AI behaviour
         isPlayerInSightRange = Physics.CheckSphere(transform.position, AiSightRange, PlayerLayerMask);
         isPlayerInAttackRange = Physics.CheckSphere(transform.position, AiAttackRange, PlayerLayerMask);
         CurrentAI = AIBehavior.Attack;
         
+        // Perform actions based on where the player is 
         if (isPlayerInAttackRange && isPlayerInSightRange)
         {
             CurrentAI = AIBehavior.Attack;
@@ -121,6 +124,7 @@ public class EnemyController : MonoBehaviour
 
         switch (CurrentAI)
         {
+            // AI patrolling
             case AIBehavior.Patrol:
                 if (!isWalkingPointSet)
                 {
@@ -140,20 +144,23 @@ public class EnemyController : MonoBehaviour
                 }
                 break;
 
+            // AI Following Player
             case AIBehavior.Follow:
                 enemyNavMesh.SetDestination(player.transform.position);
                 Debug.DrawLine(transform.position, player.transform.position, Color.yellow);
                 break;
             
+            // AI Attacking Player
             case AIBehavior.Attack:
 
+                // Find player and look at them
                 enemyNavMesh.SetDestination(transform.position);
                 transform.LookAt(player.transform);
                 Debug.DrawLine(transform.position, player.transform.position, Color.red);
 
                 if (!alreadyAttacked)
                 {
-                    //////Attack Code///////                    
+                    // Attack Code                  
                     player.transform.gameObject.GetComponent<PlayerStatController>().TakeDamage(EnemyDamagePower);
                     Debug.Log("Player is getting attacked!");
                     alreadyAttacked = true;
@@ -169,11 +176,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    // Generate a new AI walking point randomly and verify that it is valid
     private void FindNewWalkPoint()
     {
+        // Generate random X and Y
         float randX = UnityEngine.Random.Range(-WalkingPointRange, WalkingPointRange);
         float randZ = UnityEngine.Random.Range(-WalkingPointRange, WalkingPointRange);
 
+        // Generate final Vector3 Walking Point
         walkingPoint = new Vector3(transform.position.x + randX, transform.position.y, transform.position.z + randZ);
 
         if (Physics.Raycast(walkingPoint, -transform.up, 2f, GroundLayerMask))
@@ -187,6 +197,7 @@ public class EnemyController : MonoBehaviour
         alreadyAttacked = false;
     }
 
+    // AI Damage Handling script
     public void TakeDamage(int damage)
     {
         if (Armor > 0 )
@@ -206,13 +217,16 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    // If enemy dies
     private void DestroyEnemy()
     {
+        // Randomly generate health pickups upon death
         if (UnityEngine.Random.value < 0.1f)
         {
             var healthPickUp = GameObject.FindGameObjectWithTag("PickUpHealth");
             Instantiate(healthPickUp, new Vector3(transform.position.x, transform.position.y + 0.3f, transform.position.z), transform.rotation);
         }
+        // Randomly generate ammo pickups upon death
         else if (UnityEngine.Random.value < 0.2f)
         {
             var ammoPickUp = GameObject.FindGameObjectWithTag("PickUpAmmo");
@@ -223,6 +237,7 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Debug Gizmos
     private void OnDrawGizmosSelected()
     {        
         Gizmos.color = Color.yellow;

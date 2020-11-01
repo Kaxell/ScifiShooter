@@ -6,8 +6,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
+/* 
+    GameController.cs handles player progression through the level, key management, and level completion / failure.
+*/
+
 public class GameController : MonoBehaviour
 {
+    #region Variables
     [SerializeField]
     private GameObject key;
     public GameObject enemy;
@@ -19,7 +24,7 @@ public class GameController : MonoBehaviour
     private bool isGameFinished = false;
     private bool allKeysCollected = false;
     private int spawnedKeys;
-
+    #endregion
 
 
     [NonSerialized]
@@ -27,6 +32,7 @@ public class GameController : MonoBehaviour
     //public float countdown = 10;
 
 
+    // On start, set everything to normal.
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -39,8 +45,10 @@ public class GameController : MonoBehaviour
         spawnedKeys = 0;
     }
 
+    // Generating keys at random spawn points.
     public void SpawnKey(int keysToSpawn)
     {
+        // Store spawn points in a list of coordinates
         List<Vector3> coord = new List<Vector3>();
         Vector3 keyPosition = new Vector3(0, 0, 0);
 
@@ -52,6 +60,7 @@ public class GameController : MonoBehaviour
         coord.Add(new Vector3(14f, 3.742f, 6.5f));
         coord.Add(new Vector3(26f, 1f, 36f));
 
+        // Randomly choose spawn points for every key
         for (int i = 0; i < keysToSpawn; i++) 
         {
             var index = UnityEngine.Random.Range(0, coord.Count);
@@ -60,13 +69,13 @@ public class GameController : MonoBehaviour
             Debug.Log("spawned " + spawnedKeys);
             coord.Remove(coord.ElementAt(index));
         }
-
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        // Reset game if player has won or lost the game.
         if (isGameFinished && Input.GetKeyDown(KeyCode.Space))
         {
             isGameFinished = true;
@@ -93,10 +102,9 @@ public class GameController : MonoBehaviour
             player.GetComponent<PlayerStatController>().UpdateWaveText(currentWaveLevel);
             
         }
-
-
     }
 
+    // Handles logic relating to starting the current level
     private void StartLevel(ref int currentWaveLevel)
     {
         currentWaveLevel++;
@@ -113,8 +121,6 @@ public class GameController : MonoBehaviour
             }
         }
     }
-
-
 
     public void OnEnemyDestroyed(GameObject enemy)
     {
@@ -149,8 +155,5 @@ public class GameController : MonoBehaviour
         YouLostText.text = "You Lost!\nPress SPACE TO TRY AGAIN!";
         //currentWaveLevel = 0;
         isGameFinished = true;
-
-
     }
-
 }
