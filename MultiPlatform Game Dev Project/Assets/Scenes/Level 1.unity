@@ -5247,7 +5247,7 @@ Transform:
   - {fileID: 1246824520}
   - {fileID: 106614238}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &200186868
 PrefabInstance:
@@ -5397,6 +5397,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 492620, guid: 0f9396310131e47e3979f1a7cb96c071, type: 3}
   m_PrefabInstance: {fileID: 201203672}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &201897194
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3855932135674258378, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_Name
+      value: EnemyController
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -14.323205
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932135674258379, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932136737429886, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855932136737429886, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2893313ba2af0ab49a209926a558bda8, type: 3}
 --- !u!1001 &203791567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34659,6 +34724,14 @@ PrefabInstance:
     - target: {fileID: 309156531824827534, guid: e5567e07442d7304d93aa8f9c1cdf5da, type: 3}
       propertyPath: m_Name
       value: PlayerController
+      objectReference: {fileID: 0}
+    - target: {fileID: 2685307458784332306, guid: e5567e07442d7304d93aa8f9c1cdf5da, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -66
+      objectReference: {fileID: 0}
+    - target: {fileID: 2685307460506107374, guid: e5567e07442d7304d93aa8f9c1cdf5da, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -105.899994
       objectReference: {fileID: 0}
     - target: {fileID: 4298903895315664881, guid: e5567e07442d7304d93aa8f9c1cdf5da, type: 3}
       propertyPath: movementSpeed
