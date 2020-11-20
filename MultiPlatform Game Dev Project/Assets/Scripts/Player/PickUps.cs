@@ -25,7 +25,7 @@ public class PickUps : MonoBehaviour
         needKey = 3;
         keyCount.text = "";
         SetCountText();
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().SpawnKey(needKey);
+        //GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().SpawnKey(needKey);
         pickUpSound = gameObject.GetComponent<AudioSource>();
     }
 

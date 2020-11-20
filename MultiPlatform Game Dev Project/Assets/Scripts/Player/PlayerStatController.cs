@@ -33,7 +33,7 @@ public class PlayerStatController : MonoBehaviour
         Level = currentWaveLevel;
         Health += Level * 30;
         Armor += Level * 0.1f;
-        gameObject.GetComponent<FirstPersonMovement>().speed += currentWaveLevel * 0.5f;
+        //gameObject.GetComponent<PlayerMove>().speed += currentWaveLevel * 0.5f;
         //This causes coupling so it is better to combine stat and movement after the prototype
         GameObject.FindGameObjectWithTag("Weapon").GetComponent<PistolShoot>().OnLeveledUp(currentWaveLevel);
         UpdatePlayerStatsTexts();
@@ -92,8 +92,8 @@ public class PlayerStatController : MonoBehaviour
     {
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        gameObject.GetComponent<FirstPersonMovement>().enabled = false;
-        gameObject.GetComponent<Crouch>().enabled = false;
+        gameObject.GetComponent<PlayerMove>().enabled = false;
+        //gameObject.GetComponent<Crouch>().enabled = false;
         gameObject.GetComponentInChildren<PistolShoot>().enabled = false;
     }
     

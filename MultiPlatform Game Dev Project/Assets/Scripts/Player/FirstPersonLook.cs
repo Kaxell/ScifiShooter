@@ -12,7 +12,7 @@ public class FirstPersonLook : MonoBehaviour
 
     void Reset()
     {
-        character = GetComponentInParent<FirstPersonMovement>().transform;
+        character = GetComponentInParent<PlayerMove>().transform;
     }
 
     void Start()

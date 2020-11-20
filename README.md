@@ -9,14 +9,15 @@
 [Laser Shoot](https://freesound.org/people/MusicLegends/sounds/344310/)  
 
 ## Mini First Person Controller 
-[Used for Player Movement and Look, Jump and Crouching.](https://assetstore.unity.com/packages/tools/input-management/mini-first-person-controller-174710)
+[Used only for MouseLook script](https://assetstore.unity.com/packages/tools/input-management/mini-first-person-controller-174710)
 
 ## Weapon 
 [Weapon Model](https://assetstore.unity.com/packages/3d/props/guns/sci-fi-futuristic-hand-gun-90249)  
 [Weapon Swaying method](https://www.youtube.com/watch?v=6hyQ2rPkMDY&t=125s)  
 
-## Prototyping
-[Snaps Prototype Pack is imported for environment prototyping. It comes with Snaps Student Bundle.](https://assetstore.unity.com/browse/student-plan-pack)
+## Enemies
+[Gatling Gun Turret](https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-barrel-175837)
+
 
 ## Path Finding
 [Path Finding Algorithm is referenced from this video](https://www.youtube.com/watch?v=UjkSFoLxesw)  
@@ -27,6 +28,14 @@
 
 ## Item Pickup
 [Key Spawning](https://www.youtube.com/watch?v=IXDvl8aTM_M)
+
+## Environment
+[Modular Sci-fi Kit](https://assetstore.unity.com/packages/3d/environments/3d-free-modular-kit-85732)
+
+## Environment Props
+[Sci-fi Barrel](https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-barrel-175837)
+[Sci-fi Objects](https://assetstore.unity.com/packages/3d/environments/sci-fi/sci-fi-objects-pack-1-170478)
+[3D Sci-fi ATM](https://assetstore.unity.com/packages/3d/environments/sci-fi/atm-95057)
 
 Game Controller  
 Enemy Controller (Except path finding)  
