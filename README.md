@@ -8,8 +8,9 @@
 [Item Pickup](http://freesoundeffect.net/sound/pickup-generic-pickup-sfx-collection-item-2-sound-effect)  
 [Laser Shoot](https://freesound.org/people/MusicLegends/sounds/344310/)  
 
-## Mini First Person Controller 
-[Used only for MouseLook script](https://assetstore.unity.com/packages/tools/input-management/mini-first-person-controller-174710)
+## First Person Controller 
+[Tutorial for Movement](https://www.youtube.com/watch?v=_QajrabyTJc)
+[MouseLook script](https://assetstore.unity.com/packages/tools/input-management/mini-first-person-controller-174710)
 
 ## Weapon 
 [Weapon Model](https://assetstore.unity.com/packages/3d/props/guns/sci-fi-futuristic-hand-gun-90249)  

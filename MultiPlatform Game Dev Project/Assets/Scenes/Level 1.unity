@@ -28376,7 +28376,8 @@ PrefabInstance:
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114407372788602730, guid: f72d03e48b3dbfd4ca0f692e695377c3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f72d03e48b3dbfd4ca0f692e695377c3, type: 3}
 --- !u!1001 &1147824090
 PrefabInstance:
@@ -34659,7 +34660,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4298903895315664881, guid: e5567e07442d7304d93aa8f9c1cdf5da, type: 3}
+      propertyPath: movementSpeed
+      value: 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 421894498407269774, guid: e5567e07442d7304d93aa8f9c1cdf5da, type: 3}
+    - {fileID: 421497606446280028, guid: e5567e07442d7304d93aa8f9c1cdf5da, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e5567e07442d7304d93aa8f9c1cdf5da, type: 3}
 --- !u!1001 &1487480904
 PrefabInstance:
@@ -36819,7 +36826,8 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11424326, guid: 45b9a5b6a96ed4d0699b4faff594d8c4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 45b9a5b6a96ed4d0699b4faff594d8c4, type: 3}
 --- !u!4 &1568457747 stripped
 Transform:
